@@ -1,0 +1,5 @@
+# ignore node packages
+NODEJS_TESTING/node_modules
+NODEJS_TESTING/package.json
+NODEJS_TESTING/src/model/pretrained_python
+NODEJS_TESTING/package-lock.json
