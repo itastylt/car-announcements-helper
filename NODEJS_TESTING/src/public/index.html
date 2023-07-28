@@ -1,21 +1,22 @@
-<html>
+<html class="h-100 w-100">
 <head>
-    <title>Car recognition test example</title>
+    <title>Car recognition testing app</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<body>
-    <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <form action="/example/predict" enctype="multipart/form-data" method="post">
-                    <div class="form-row py-2">
-                        <input type="file" name="image" id="form_image">
+<body class="h-100 w-100">
+    <div class="bg-dark bg-gradient h-100">
+        <div class="bg-dark bg-gradient image-form ">
+
+            <form action="/example/predict" enctype="multipart/form-data" method="post">
+                <div class="border-dashed border-light w-100 h-100 d-flex justify-content-center align-items-center">
+                    <canvas id="photo_prediction" class="w-100 h-100 d-none"></canvas>
+                    <div class="w-100 h-100 d-flex flex-wrap justify-content-center align-items-center ">
+                        <label for="car-photo"><h3 class="text-light">Upload car photo here...</h6></label>
+                        <input type="file" class="d-none" id="car-photo" name="car_photo" onchange="form.submit();">
                     </div>
-                    <div class="form-row">
-                        <input type="submit" class="btn btn-primary" name="upload" value="Upload">
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

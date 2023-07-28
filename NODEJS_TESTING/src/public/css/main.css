@@ -1,0 +1,9 @@
+.border-dashed {
+    border: 2px;
+    border-style: dashed !important;
+}
+
+.image-form {
+    height: 720px;
+    max-height: 720px !important;
+}

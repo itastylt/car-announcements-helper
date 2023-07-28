@@ -7,20 +7,21 @@ const fileMiddleware = require("express-fileupload");
 const app = express();
 const path = require("path");
 
+app.use(express.static("public"));
 app.use(fileMiddleware());
 app.get('/', (request, response) => {
 	response.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 app.post('/example/predict', async (request, response) => {
-	const { image } = request.files;
-	await image.mv(__dirname + "/model/temp/" + image.name);
-	if(!image) {
+	const { car_photo } = request.files;
+	await car_photo.mv(__dirname + "/model/temp/" + car_photo.name);
+	if(!car_photo) {
 		response.sendStatus(400);
 		return;
 	}
 
-	unet.predict(image).then((result) => {
+	unet.predict(car_photo).then((result) => {
 		var img = Buffer.from(result);
 
 		response.writeHead(200, {
