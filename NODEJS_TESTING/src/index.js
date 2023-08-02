@@ -6,29 +6,42 @@ const express = require('express');
 const fileMiddleware = require("express-fileupload");
 const app = express();
 const path = require("path");
+const tf = require("@tensorflow/tfjs-node");
+const boundary = require("./model/boundary_box/boundary_processing.js");
 
 app.use(express.static("public"));
 app.use(fileMiddleware());
 app.get('/', (request, response) => {
 	response.sendFile(path.join(__dirname, './public/index.html'));
 });
+async function loadModel() {
+	return await tf.loadLayersModel("file://model/pretrained/model.json");
+}
+
+const model = loadModel();
 
 app.post('/example/predict', async (request, response) => {
+
 	const { car_photo } = request.files;
-	await car_photo.mv(__dirname + "/model/temp/" + car_photo.name);
 	if(!car_photo) {
 		response.sendStatus(400);
 		return;
 	}
 
-	unet.predict(car_photo).then((result) => {
-		var img = Buffer.from(result);
+	unet.predict(model, car_photo, (result) => {
+		let imageBuffer = Buffer.from(car_photo.data);
+		let maskBuffer = Buffer.from(result);
 
-		response.writeHead(200, {
-		  'Content-Type': 'image/png',
-		  'Content-Length': img.length
-		});
-		response.end(img);
+		if(maskBuffer && imageBuffer) {
+			boundary.get_boundary_image(imageBuffer.toString("base64"),maskBuffer.toString('base64')).then((boundary) => {
+				let boundaryBox = Buffer.from(boundary);
+				response.status(200).send({image: imageBuffer.toString("base64"), mask: maskBuffer.toString('base64'), boundary: boundaryBox.toString('base64')});
+			});
+
+		} else {
+			response.status(400);
+		}
+		
 	});
 });
 

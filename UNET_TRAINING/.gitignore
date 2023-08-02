@@ -2,3 +2,4 @@
 dataset/
 /unet_car.hdf5
 /unet.h5
+tmp/
