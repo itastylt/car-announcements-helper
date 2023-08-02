@@ -1,4 +1,4 @@
-# Semantic car segmentation
+# AI-Driven car announcement helper
 • This AI-driven Node.js based car model recognition system recognises car model using UNet and ResNet-50 Deep Neural Network models.
 
 • Models are trained using IPython kernel for fast training speed.
